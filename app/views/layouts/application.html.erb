@@ -11,7 +11,7 @@
   <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
       <div class="container">
         <%= link_to "One Month Rails", root_path, class: "navbar-brand" %>
         <ul class="navbar-nav mr-auto">
@@ -19,8 +19,21 @@
           <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "Contact", "#", class: "nav-link" %></li>
         </ul>
+        <% if user_signed_in? %>
+        <ul class="navbar-nav ml-auto">        
+          <li class="nav-item"><%= link_to "Log out", signout_path, method: :delete, class: "nav-link" %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to "Sign in", signin_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Sign up", signup_path, class: "nav-link btn btn-primary" %></li>        
+        </ul>
+        <% end %>
       </div>
     </nav>
+
+    <!-- Flash Messages -->
+    <% flash.each do |name, message| %>
+      <%= content_tag(:div, message, class: "alert alert-info #{name}") %>
+    <% end %>
 
     <!-- Page Content -->
     <%= yield %>
